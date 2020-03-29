@@ -7,15 +7,20 @@ class StringParser {
     // TODO: Complete the following function
     fun getResult(inputString: String): Array<String> {
 
-        val regex = """(\<[^\>]*\>|\[[^\]]*\]|\([^\)]*\))*""".toRegex()
+        val regex = """\<[^\>]*\>|\[[^\]]*\]|\([^\)]*\)""".toRegex()
         val matchResults = regex.findAll(inputString)
 
-        for(result in matchResults){
+        val matchResultsList = matchResults.toList()
+        if(matchResultsList.isEmpty()){
+            return emptyArray()
+        }
+
+        for(result in matchResultsList){
             val value = result.value
             if(value.isNotEmpty()) {
                 val add = value.substring(1, value.length - 1)
                 substrings += add
-                //return getResult(add)
+                substrings + getResult(add)
             }
         }
 
